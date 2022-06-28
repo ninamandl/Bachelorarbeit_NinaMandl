@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 
 
 class Tacho extends StatefulWidget {
