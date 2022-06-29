@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, prefer_final_fields, deprecated_member_use
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, prefer_final_fields, deprecated_member_use, constant_identifier_names, unused_field
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -106,6 +106,9 @@ class _TachoState extends State<Tacho> {
 
   double tankPointerValue = 80.0;
 
+
+  static const IconData local_gas_station_sharp = IconData(0xea8e, fontFamily: 'MaterialIcons');
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -116,15 +119,12 @@ class _TachoState extends State<Tacho> {
     return Scaffold(
         body: GridView.count(
       primary: false,
-      // padding: const EdgeInsets.all(10),
-      // crossAxisSpacing: 10,
-      // mainAxisSpacing: 10,
       crossAxisCount: 3,
       childAspectRatio: (itemWidth / itemHeight),
 
       children: <Widget>[
         SfRadialGauge( // Revolutions
-            title: GaugeTitle(text: "Revolutions"), //title for guage
+            // title: GaugeTitle(text: "Revolutions"), //title for guage
             enableLoadingAnimation:
                 false, //show meter pointer movement while loading
             //animationDuration: 200, //pointer movement speed
@@ -202,7 +202,7 @@ class _TachoState extends State<Tacho> {
         ),
         
         SfRadialGauge( // Tacho
-            title: GaugeTitle(text: "Speedo Meter"), //title for guage
+            // title: GaugeTitle(text: "Speedo Meter"), //title for guage
             enableLoadingAnimation:
                 false, //show meter pointer movement while loading
             //animationDuration: 200, //pointer movement speed
@@ -289,26 +289,37 @@ class _TachoState extends State<Tacho> {
           ),
         ),
         
-        Container( // Tank Level
-          padding: const EdgeInsets.all(8),
-          // child: LevelIndicator()
-          child: Center(
-            child: SizedBox(
-              height: 250,
-              width: 100,
-              child: SfLinearGauge(
-                orientation: LinearGaugeOrientation.vertical,
-                axisTrackStyle: LinearAxisTrackStyle(thickness: 20),
-                barPointers: [
-                  LinearBarPointer(
-                    value: tankPointerValue,
-                    thickness: 20,
-                    color: Colors.black,
-
-                )],
+        Row(
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(130, 20, 0, 57),
+              alignment: Alignment.bottomRight,
+              child: Icon(
+                Icons.local_gas_station_sharp,
+                size: 40,
               ),
             ),
-          ),
+            Container( // Tank Level
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              // child: LevelIndicator()
+              child: Center(
+                child: SizedBox(
+                  height: 250,
+                  width: 100,
+                  child: SfLinearGauge(
+                    orientation: LinearGaugeOrientation.vertical,
+                    axisTrackStyle: LinearAxisTrackStyle(thickness: 30),
+                    barPointers: [
+                      LinearBarPointer(
+                        value: tankPointerValue,
+                        thickness: 30,
+                        color: Colors.black,
+                    )],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     ));
