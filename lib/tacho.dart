@@ -106,8 +106,9 @@ class _TachoState extends State<Tacho> {
 
   double tankPointerValue = 80.0;
 
-
+// Icons:
   static const IconData local_gas_station_sharp = IconData(0xea8e, fontFamily: 'MaterialIcons');
+  static const IconData settings = IconData(0xe57f, fontFamily: 'MaterialIcons');
 
   @override
   Widget build(BuildContext context) {
@@ -123,41 +124,71 @@ class _TachoState extends State<Tacho> {
       childAspectRatio: (itemWidth / itemHeight),
 
       children: <Widget>[
-        SfRadialGauge( // Revolutions
-            // title: GaugeTitle(text: "Revolutions"), //title for guage
-            enableLoadingAnimation:
-                false, //show meter pointer movement while loading
-            //animationDuration: 200, //pointer movement speed
-            axes: <RadialAxis>[
-              //Radial Guage Axix, use other Guage type here
-              RadialAxis(
-                  minimum: 0,
-                  maximum: 6,
-                  interval: 1,
-                  axisLineStyle: AxisLineStyle(thickness: 35),
-                  radiusFactor: 0.8,
-                  pointers: <GaugePointer>[
-                    RangePointer(
-                      value: revolutionsPointerValue,
-                      width: 35,
-                      color: Colors.black,
-                    )
-                  ],
-                  annotations: <GaugeAnnotation>[
-                    GaugeAnnotation(
-                        widget: Container(
-                            child: Text(
-                                'rpm'.toString(), //noch ändern zu current value
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold))),
-                        angle: 90,
-                        positionFactor: 0.5),
-                    //add more annotations 'texts inside guage' here
-                  ]
-                  //add more annotations 'texts inside guage' here
-                  )
-            ]),
+        Row(
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  size: 30,
+                  color: Colors.black,
+                  ),
+                padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                highlightColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {  },
+              ),
+                  // child: IconButton(
+                  //     // alignment: Alignment.topLeft,
+                  //     padding: EdgeInsets.fromLTRB(100, 0, 0, 200),
+                  //     icon: null,
+                  //     child: Icon(
+                  //       Icons.settings,
+                  //       size: 30,
+                  //       color: Colors.black,
+                  //     )),
+                  // onPressed: () {},
+                ),
+            SfRadialGauge( // Revolutions
+                // title: GaugeTitle(text: "Revolutions"), //title for guage
+                enableLoadingAnimation:
+                    false, //show meter pointer movement while loading
+                //animationDuration: 200, //pointer movement speed
+                axes: <RadialAxis>[
+                  //Radial Guage Axix, use other Guage type here
+                  RadialAxis(
+                      minimum: 0,
+                      maximum: 6,
+                      interval: 1,
+                      axisLineStyle: AxisLineStyle(thickness: 35),
+                      radiusFactor: 0.8,
+                      pointers: <GaugePointer>[
+                        RangePointer(
+                          value: revolutionsPointerValue,
+                          width: 35,
+                          color: Colors.black,
+                        )
+                      ],
+                      annotations: <GaugeAnnotation>[
+                        GaugeAnnotation(
+                            widget: Container(
+                                child: Text(
+                                    'rpm'.toString(), //noch ändern zu current value
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold))),
+                            angle: 90,
+                            positionFactor: 0.5),
+                        //add more annotations 'texts inside guage' here
+                      ]
+                      //add more annotations 'texts inside guage' here
+                      )
+                ]),
+          ],
+        ),
         
         Column(
           children: [
@@ -167,13 +198,12 @@ class _TachoState extends State<Tacho> {
                     height: 50,
                     width: 150,
                     child: RaisedButton(
-                      color: Color.fromARGB(255, 70, 70, 70),
-                      textColor: Colors.white,
+                      color: Colors.grey,
                       child: Text(
                         'reset',
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                       // onPressed: null,
@@ -185,13 +215,12 @@ class _TachoState extends State<Tacho> {
                 height: 50,
                 width: 150,
                 child: RaisedButton(
-                  color: Color.fromARGB(255, 70, 70, 70),
-                  textColor: Colors.white,
+                  color: Colors.grey,
                   child: Text(
                     'stop',
                     style: TextStyle(
                       fontSize: 20.0,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ),
                   // onPressed: null,
@@ -201,39 +230,59 @@ class _TachoState extends State<Tacho> {
           ],
         ),
         
-        SfRadialGauge( // Tacho
-            // title: GaugeTitle(text: "Speedo Meter"), //title for guage
-            enableLoadingAnimation:
-                false, //show meter pointer movement while loading
-            //animationDuration: 200, //pointer movement speed
-            axes: <RadialAxis>[
-              //Radial Guage Axix, use other Guage type here
-              RadialAxis(
-                  minimum: 0,
-                  maximum: 180,
-                  axisLineStyle: AxisLineStyle(thickness: 35),
-                  radiusFactor: 0.8,
-                  pointers: <GaugePointer>[
-                    RangePointer(
-                      value: tachoPointerValue,
-                      width: 35,
-                      color: Colors.black,
-                    )
-                  ],
-                  annotations: <GaugeAnnotation>[
-                    GaugeAnnotation(
-                        widget: Container(
-                            child: Text(
-                                'km/h'
-                                    .toString(), //noch ändern zu current value
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold))),
-                        angle: 90,
-                        positionFactor: 0.5),
-                    //add more annotations 'texts inside guage' here
-                  ])
-            ]),
+        Row(
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  size: 30,
+                  color: Colors.black,
+                  ),
+                padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                highlightColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {  },
+              ),
+            ),
+            SfRadialGauge( // Tacho
+                // title: GaugeTitle(text: "Speedo Meter"), //title for guage
+                enableLoadingAnimation:
+                    false, //show meter pointer movement while loading
+                //animationDuration: 200, //pointer movement speed
+                axes: <RadialAxis>[
+                  //Radial Guage Axix, use other Guage type here
+                  RadialAxis(
+                      minimum: 0,
+                      maximum: 180,
+                      axisLineStyle: AxisLineStyle(thickness: 35),
+                      radiusFactor: 0.8,
+                      pointers: <GaugePointer>[
+                        RangePointer(
+                          value: tachoPointerValue,
+                          width: 35,
+                          color: Colors.black,
+                        )
+                      ],
+                      annotations: <GaugeAnnotation>[
+                        GaugeAnnotation(
+                            widget: Container(
+                                child: Text(
+                                    'km/h'
+                                        .toString(), //noch ändern zu current value
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold))),
+                            angle: 90,
+                            positionFactor: 0.5),
+                        //add more annotations 'texts inside guage' here
+                      ])
+                ]),
+          ],
+        ),
         
         Container( // stop button
           child: Column(
@@ -292,7 +341,23 @@ class _TachoState extends State<Tacho> {
         Row(
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(130, 20, 0, 57),
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  size: 30,
+                  color: Colors.black,
+                  ),
+                padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                highlightColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {  },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(110, 20, 0, 57),
               alignment: Alignment.bottomRight,
               child: Icon(
                 Icons.local_gas_station_sharp,
@@ -300,7 +365,7 @@ class _TachoState extends State<Tacho> {
               ),
             ),
             Container( // Tank Level
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
               // child: LevelIndicator()
               child: Center(
                 child: SizedBox(
