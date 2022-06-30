@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // view
 import 'package:speedometer_02/tacho.dart';
-
 void main() {
   runApp(MyApp());
 }

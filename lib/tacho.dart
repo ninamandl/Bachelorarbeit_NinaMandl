@@ -6,6 +6,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 
 
+
 class Tacho extends StatefulWidget {
   @override
   State<Tacho> createState() => _TachoState();
@@ -110,6 +111,7 @@ class _TachoState extends State<Tacho> {
   static const IconData local_gas_station_sharp = IconData(0xea8e, fontFamily: 'MaterialIcons');
   static const IconData settings = IconData(0xe57f, fontFamily: 'MaterialIcons');
 
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -141,17 +143,7 @@ class _TachoState extends State<Tacho> {
                 splashColor: Colors.transparent,
                 onPressed: () {  },
               ),
-                  // child: IconButton(
-                  //     // alignment: Alignment.topLeft,
-                  //     padding: EdgeInsets.fromLTRB(100, 0, 0, 200),
-                  //     icon: null,
-                  //     child: Icon(
-                  //       Icons.settings,
-                  //       size: 30,
-                  //       color: Colors.black,
-                  //     )),
-                  // onPressed: () {},
-                ),
+            ),
             SfRadialGauge( // Revolutions
                 // title: GaugeTitle(text: "Revolutions"), //title for guage
                 enableLoadingAnimation:
@@ -163,12 +155,12 @@ class _TachoState extends State<Tacho> {
                       minimum: 0,
                       maximum: 6,
                       interval: 1,
-                      axisLineStyle: AxisLineStyle(thickness: 35),
+                      axisLineStyle: AxisLineStyle(thickness: 40),
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
                           value: revolutionsPointerValue,
-                          width: 35,
+                          width: 40,
                           color: Colors.black,
                         )
                       ],
@@ -258,12 +250,12 @@ class _TachoState extends State<Tacho> {
                   RadialAxis(
                       minimum: 0,
                       maximum: 180,
-                      axisLineStyle: AxisLineStyle(thickness: 35),
+                      axisLineStyle: AxisLineStyle(thickness: 40),
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
                           value: tachoPointerValue,
-                          width: 35,
+                          width: 40,
                           color: Colors.black,
                         )
                       ],
@@ -340,7 +332,7 @@ class _TachoState extends State<Tacho> {
         
         Row(
           children: [
-            Container(
+            Container( // Settings Icon
               alignment: Alignment.topLeft,
               child: IconButton(
                 icon: Icon(
@@ -356,8 +348,8 @@ class _TachoState extends State<Tacho> {
                 onPressed: () {  },
               ),
             ),
-            Container(
-              padding: EdgeInsets.fromLTRB(110, 20, 0, 57),
+            Container( // Gas Staion Icon
+              padding: EdgeInsets.fromLTRB(110, 20, 0, 62),
               alignment: Alignment.bottomRight,
               child: Icon(
                 Icons.local_gas_station_sharp,
@@ -365,8 +357,6 @@ class _TachoState extends State<Tacho> {
               ),
             ),
             Container( // Tank Level
-              // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              // child: LevelIndicator()
               child: Center(
                 child: SizedBox(
                   height: 250,
