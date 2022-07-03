@@ -1,9 +1,11 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, prefer_final_fields, deprecated_member_use, constant_identifier_names, unused_field
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, prefer_final_fields, deprecated_member_use, constant_identifier_names, unused_field, avoid_print
 // ignore_for_file: prefer_const_literals_to_create_immutables
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
+
+enum Options { small, medium, big, exit }
 
 
 
@@ -22,6 +24,8 @@ class _TachoState extends State<Tacho> {
   bool _buttonPressed = false;
   bool _loopActive = false;
   bool _notButtonPressed = false;
+
+  
 
   void _setPointerDuration() {
     setState(() {
@@ -111,6 +115,160 @@ class _TachoState extends State<Tacho> {
   static const IconData local_gas_station_sharp = IconData(0xea8e, fontFamily: 'MaterialIcons');
   static const IconData settings = IconData(0xe57f, fontFamily: 'MaterialIcons');
 
+// ----------------> Settings: Change Font Size - Start 
+
+  var _popupMenuItemIndex = 0.0;
+
+// change Font Size rpm - start
+
+  double custSizeRPM = 15.0;
+
+    PopupMenuItem _buildPopupMenuItemRPM(
+      String title, IconData iconData, double position) {
+    return PopupMenuItem(
+      value: position,
+      child:  Row(
+        children: [
+          Icon(iconData, color: Colors.black,),
+          Text(title),
+        ],
+      ),
+    );
+  }
+
+  _onMenuItemSelectedRPM(double value) {
+    setState(() {
+      _popupMenuItemIndex = value;
+    });
+
+    if (value == Options.small.index) {
+      custSizeRPM = 10.0;
+    } else if (value == Options.medium.index) {
+      custSizeRPM = 15.0;
+    } else if (value == Options.big.index) {
+      custSizeRPM = 20.0;
+    } else {
+      custSizeRPM = custSizeRPM;
+    }
+  }
+// change Font Size rpm - end
+
+
+// change Font Size kmh - start
+
+  double custSizeKMH = 15.0;
+
+    PopupMenuItem _buildPopupMenuItemKMH(
+      String title, IconData iconData, double position) {
+    return PopupMenuItem(
+      value: position,
+      child:  Row(
+        children: [
+          Icon(iconData, color: Colors.black,),
+          Text(title),
+        ],
+      ),
+    );
+  }
+
+  _onMenuItemSelectedKMH(double value) {
+    setState(() {
+      _popupMenuItemIndex = value;
+    });
+
+    if (value == Options.small.index) {
+      custSizeKMH = 10.0;
+    } else if (value == Options.medium.index) {
+      custSizeKMH = 15.0;
+    } else if (value == Options.big.index) {
+      custSizeKMH = 20.0;
+    } else {
+      custSizeKMH = custSizeKMH;
+    }
+  }
+// change Font Size kmh - end
+
+
+// change Font Size Tank - start
+
+  double custSizeTank = 15.0;
+
+    PopupMenuItem _buildPopupMenuItemTank(
+      String title, IconData iconData, double position) {
+    return PopupMenuItem(
+      value: position,
+      child:  Row(
+        children: [
+          Icon(iconData, color: Colors.black,),
+          Text(title),
+        ],
+      ),
+    );
+  }
+
+  _onMenuItemSelectedTank(double value) {
+    setState(() {
+      _popupMenuItemIndex = value;
+    });
+
+    if (value == Options.small.index) {
+      custSizeTank = 10.0;
+    } else if (value == Options.medium.index) {
+      custSizeTank = 15.0;
+    } else if (value == Options.big.index) {
+      custSizeTank = 20.0;
+    } else {
+      custSizeTank = custSizeTank;
+    }
+  }
+
+// change Font Size Tank - end
+
+// ----------------> Settings: Change Font Size - End 
+
+// change Widget Size - start
+
+  double custWidgetSize = 40;
+
+    PopupMenuItem _buildPopupMenuItem(
+      String title, IconData iconData, double position) {
+    return PopupMenuItem(
+      value: position,
+      child:  Row(
+        children: [
+          Icon(iconData, color: Colors.black,),
+          Text(title),
+        ],
+      ),
+    );
+  }
+
+  _onMenuItemSelected(double value) {
+    setState(() {
+      _popupMenuItemIndex = value;
+    });
+
+    if (value == Options.small.index) {
+      custWidgetSize = 30.0;
+      custSizeRPM = 10.0;
+      custSizeKMH = 10.0;
+      custSizeTank = 10.0;
+    } else if (value == Options.medium.index) {
+      custWidgetSize = 40.0;
+      custSizeRPM = 15.0;
+      custSizeKMH = 15.0;
+      custSizeTank = 15.0;
+    } else if (value == Options.big.index) {
+      custWidgetSize = 50.0;
+      custSizeRPM = 20.0;
+      custSizeKMH = 20.0;
+      custSizeTank = 20.0;
+    } else {
+      custWidgetSize = custWidgetSize;
+    }
+  }
+
+// change Widget Size - end
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +278,27 @@ class _TachoState extends State<Tacho> {
     final double itemWidth = (size.width);
 
     return Scaffold(
-        body: GridView.count(
+      appBar: AppBar(
+          title: Text("Instrument Panel - Testing"),
+          backgroundColor: Color.fromARGB(255, 34, 34, 34),
+          actions: [PopupMenuButton(
+            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+            onSelected: (value) {
+                  _onMenuItemSelected(value as double);
+                },
+            itemBuilder: (ctx) => [
+              _buildPopupMenuItem('Widget Size - Small', Icons.search, Options.small.index as double),
+              _buildPopupMenuItem('Widget Size - Medium', Icons.upload, Options.medium.index as double),
+              _buildPopupMenuItem('Widget Size - Big', Icons.copy, Options.big.index as double),
+              _buildPopupMenuItem('Exit', Icons.exit_to_app, Options.exit.index as double),
+            ],
+          ) 
+          ],
+         
+        ),
+
+      
+      body: GridView.count(
       primary: false,
       crossAxisCount: 3,
       childAspectRatio: (itemWidth / itemHeight),
@@ -130,20 +308,26 @@ class _TachoState extends State<Tacho> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(
+              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              child: PopupMenuButton(
+                child: Icon(
                   Icons.settings,
                   size: 30,
                   color: Colors.black,
                   ),
-                padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onPressed: () {  },
-              ),
-            ),
+                onSelected: (value) {
+                  _onMenuItemSelectedRPM(value as double);
+                },
+                itemBuilder: (ctx) => [
+                  _buildPopupMenuItemRPM('Font Size - Small', Icons.search, Options.small.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.upload, Options.medium.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Big', Icons.copy, Options.big.index as double),
+                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
+                ],
+              )   // Callback that sets the selected popup menu ite
+          ),
+            
+            
             SfRadialGauge( // Revolutions
                 // title: GaugeTitle(text: "Revolutions"), //title for guage
                 enableLoadingAnimation:
@@ -155,12 +339,13 @@ class _TachoState extends State<Tacho> {
                       minimum: 0,
                       maximum: 6,
                       interval: 1,
-                      axisLineStyle: AxisLineStyle(thickness: 40),
+                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize),
+                      axisLabelStyle: GaugeTextStyle(fontSize: custSizeRPM),
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
                           value: revolutionsPointerValue,
-                          width: 40,
+                          width: custWidgetSize,
                           color: Colors.black,
                         )
                       ],
@@ -226,19 +411,23 @@ class _TachoState extends State<Tacho> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(
+              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              child: PopupMenuButton(
+                child: Icon(
                   Icons.settings,
                   size: 30,
                   color: Colors.black,
                   ),
-                padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onPressed: () {  },
-              ),
+                onSelected: (value) {
+                  _onMenuItemSelectedKMH(value as double);
+                },
+                itemBuilder: (ctx) => [
+                  _buildPopupMenuItemKMH('Font Size - Small', Icons.search, Options.small.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Medium', Icons.upload, Options.medium.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Big', Icons.copy, Options.big.index as double),
+                  _buildPopupMenuItemKMH('Exit', Icons.exit_to_app, Options.exit.index as double),
+                ],
+              )   // Callback that sets the selected popup menu ite
             ),
             SfRadialGauge( // Tacho
                 // title: GaugeTitle(text: "Speedo Meter"), //title for guage
@@ -250,12 +439,13 @@ class _TachoState extends State<Tacho> {
                   RadialAxis(
                       minimum: 0,
                       maximum: 180,
-                      axisLineStyle: AxisLineStyle(thickness: 40),
+                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize),
+                      axisLabelStyle: GaugeTextStyle(fontSize: custSizeKMH),
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
                           value: tachoPointerValue,
-                          width: 40,
+                          width: custWidgetSize,
                           color: Colors.black,
                         )
                       ],
@@ -332,21 +522,25 @@ class _TachoState extends State<Tacho> {
         
         Row(
           children: [
-            Container( // Settings Icon
+            Container(
               alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(
+              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              child: PopupMenuButton(
+                child: Icon(
                   Icons.settings,
                   size: 30,
                   color: Colors.black,
                   ),
-                padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onPressed: () {  },
-              ),
+                onSelected: (value) {
+                  _onMenuItemSelectedTank(value as double);
+                },
+                itemBuilder: (ctx) => [
+                  _buildPopupMenuItemTank('Font Size - Small', Icons.search, Options.small.index as double),
+                  _buildPopupMenuItemTank('Font Size - Medium', Icons.upload, Options.medium.index as double),
+                  _buildPopupMenuItemTank('Font Size - Big', Icons.copy, Options.big.index as double),
+                  _buildPopupMenuItemTank('Exit', Icons.exit_to_app, Options.exit.index as double),
+                ],
+              )   // Callback that sets the selected popup menu ite
             ),
             Container( // Gas Staion Icon
               padding: EdgeInsets.fromLTRB(110, 20, 0, 62),
@@ -363,11 +557,12 @@ class _TachoState extends State<Tacho> {
                   width: 100,
                   child: SfLinearGauge(
                     orientation: LinearGaugeOrientation.vertical,
-                    axisTrackStyle: LinearAxisTrackStyle(thickness: 30),
+                    axisTrackStyle: LinearAxisTrackStyle(thickness: custWidgetSize-10),
+                    axisLabelStyle: TextStyle(fontSize: custSizeTank),
                     barPointers: [
                       LinearBarPointer(
                         value: tankPointerValue,
-                        thickness: 30,
+                        thickness: custWidgetSize-10,
                         color: Colors.black,
                     )],
                   ),

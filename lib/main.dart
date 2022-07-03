@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 // view
 import 'package:speedometer_02/tacho.dart';
+
+enum Options { small, medium, big, exit }
+
+
 void main() {
   runApp(MyApp());
 }
@@ -31,15 +35,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-
   @override
   Widget build(BuildContext context) {
  
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Instrument Panel - Testing"),
-          backgroundColor: Color.fromARGB(255, 34, 34, 34),
-        ),
+      
         body:Container(
           child: Tacho(),
         ),
