@@ -34,7 +34,9 @@ class _TachoState extends State<Tacho> {
       tachoPointerValue++;
       revolutionsPointerValue = tachoPointerValue / 38;
       tankPointerValue -= 0.05;
-      if (tachoPointerValue == 180) _stop();
+      if (tankPointerValue < 0) tankPointerValue = 0;
+      if (tankPointerValue > 100) tankPointerValue = 100;
+      if (tachoPointerValue >= 180) tachoPointerValue = 180;
       print('Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue - going up');
     });
   }
@@ -68,6 +70,25 @@ class _TachoState extends State<Tacho> {
     });
   }
 
+  void _refillTank(){
+    setState(() {
+      pointerAnimation = true;
+      tankPointerValue ++;
+      if (tankPointerValue < 0) tankPointerValue = 0;
+      if (tankPointerValue > 100) tankPointerValue = 100;
+      print('Tank: $tankPointerValue');
+    });
+  }
+
+  void _stopRefillTank(){
+    setState(() {
+      duration = 0;
+      _buttonPressed = false;
+      _notButtonPressed = false;
+      print('stop refill');
+    });
+  }
+
   changeDuration() {
     Random random = Random();
     int newDuration = duration + random.nextInt(100);
@@ -75,7 +96,8 @@ class _TachoState extends State<Tacho> {
     return newDuration;
   }
 
-// whie pressed button
+
+// whie pressed gas button
 
   // Pointer going up
   void _increasePointerValueWhilePressed() async {
@@ -107,13 +129,39 @@ class _TachoState extends State<Tacho> {
     }
   }
 
-// end while pressed button
+// end while pressed gas button
 
-  double tankPointerValue = 80.0;
+
+// whie pressed Tank Refill button
+
+  // Tank Pointer going up
+  void _increaseTankPointerValueWhilePressed() async {
+    if (_loopActive) return; // check if loop is active
+
+    _loopActive = true;
+
+    while (_buttonPressed) {
+      // do your thing
+      setState(() {
+        _refillTank();
+      });
+
+      // wait a second
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+
+    _loopActive = false;
+  }
+
+// end while pressed Tank Refill button
+
+
+  double tankPointerValue = 75.0;
 
 // Icons:
   static const IconData local_gas_station_sharp = IconData(0xea8e, fontFamily: 'MaterialIcons');
   static const IconData settings = IconData(0xe57f, fontFamily: 'MaterialIcons');
+  
 
 // ----------------> Settings: Change Font Size - Start 
 
@@ -123,18 +171,22 @@ class _TachoState extends State<Tacho> {
 
   double custSizeRPM = 15.0;
 
-    PopupMenuItem _buildPopupMenuItemRPM(
-      String title, IconData iconData, double position) {
+    PopupMenuItem _buildPopupMenuItemRPM(String title, IconData iconData, double position) {
     return PopupMenuItem(
       value: position,
       child:  Row(
         children: [
-          Icon(iconData, color: Colors.black,),
+          Icon(iconData, color: Colors.black, size: indivitualSize,),
           Text(title),
         ],
       ),
     );
   }
+
+  double indivitualSize = 20;
+
+  // if (this.iconName = '') indivitualSize = 30;
+
 
   _onMenuItemSelectedRPM(double value) {
     setState(() {
@@ -158,8 +210,7 @@ class _TachoState extends State<Tacho> {
 
   double custSizeKMH = 15.0;
 
-    PopupMenuItem _buildPopupMenuItemKMH(
-      String title, IconData iconData, double position) {
+    PopupMenuItem _buildPopupMenuItemKMH(String title, IconData iconData, double position) {
     return PopupMenuItem(
       value: position,
       child:  Row(
@@ -193,18 +244,17 @@ class _TachoState extends State<Tacho> {
 
   double custSizeTank = 15.0;
 
-    PopupMenuItem _buildPopupMenuItemTank(
-      String title, IconData iconData, double position) {
-    return PopupMenuItem(
-      value: position,
-      child:  Row(
-        children: [
-          Icon(iconData, color: Colors.black,),
-          Text(title),
-        ],
-      ),
-    );
-  }
+    PopupMenuItem _buildPopupMenuItemTank(String title, IconData iconData, double position) {
+        return PopupMenuItem(
+          value: position,
+          child:  Row(
+            children: [
+              Icon(iconData, color: Colors.black,),
+              Text(title),
+            ],
+          ),
+        );
+      }
 
   _onMenuItemSelectedTank(double value) {
     setState(() {
@@ -230,18 +280,18 @@ class _TachoState extends State<Tacho> {
 
   double custWidgetSize = 40;
 
-    PopupMenuItem _buildPopupMenuItem(
-      String title, IconData iconData, double position) {
-    return PopupMenuItem(
-      value: position,
-      child:  Row(
-        children: [
-          Icon(iconData, color: Colors.black,),
-          Text(title),
-        ],
-      ),
-    );
-  }
+    PopupMenuItem _buildPopupMenuItem(String title, IconData iconData, double position) {
+      return PopupMenuItem(
+        value: position,
+        child:  Row(
+          children: [
+            Icon(iconData, color: Colors.black),
+            Text(title),
+          ],
+        ),
+      );
+    }
+      
 
   _onMenuItemSelected(double value) {
     setState(() {
@@ -319,15 +369,13 @@ class _TachoState extends State<Tacho> {
                   _onMenuItemSelectedRPM(value as double);
                 },
                 itemBuilder: (ctx) => [
-                  _buildPopupMenuItemRPM('Font Size - Small', Icons.search, Options.small.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.upload, Options.medium.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Big', Icons.copy, Options.big.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
                   _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
               )   // Callback that sets the selected popup menu ite
-          ),
-            
-            
+            ),
             SfRadialGauge( // Revolutions
                 // title: GaugeTitle(text: "Revolutions"), //title for guage
                 enableLoadingAnimation:
@@ -367,25 +415,38 @@ class _TachoState extends State<Tacho> {
           ],
         ),
         
-        Column(
+        Column( // tank refill and stop button
           children: [
-            Container( //reset button
-                padding: EdgeInsets.fromLTRB(100, 100, 100, 20),
-                child: SizedBox(
-                    height: 50,
-                    width: 150,
-                    child: RaisedButton(
-                      color: Colors.grey,
-                      child: Text(
-                        'reset',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.white,
+            
+            Container( // refill Tank button
+              padding: EdgeInsets.fromLTRB(100, 100, 100, 20),
+              child: Listener(
+                onPointerDown: (details) {
+                  _buttonPressed = true;
+                  _notButtonPressed = false;
+                  _increaseTankPointerValueWhilePressed();
+                },
+                onPointerUp: (details) {
+                  _buttonPressed = false;
+                  _notButtonPressed = true;
+                  _stopRefillTank();
+                 },
+                child: Container(
+                  decoration:
+                      BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(width: 2),
+                        borderRadius: BorderRadius.circular(30),
                         ),
-                      ),
-                      // onPressed: null,
-                      onPressed: () => _reset(),
-                    ))),
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'refill tank',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+
             Container( // stop button
             padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
             child: SizedBox(
@@ -466,37 +527,59 @@ class _TachoState extends State<Tacho> {
           ],
         ),
         
-        Container( // stop button
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              DigitalClock(
-                digitAnimationStyle: Curves.elasticOut,
-                is24HourTimeFormat: false,
-                areaDecoration: BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                hourMinuteDigitTextStyle: TextStyle(
-                  color: Color.fromARGB(255, 55, 55, 55),
-                  fontSize: 50,
-                ),
-                amPmDigitTextStyle: TextStyle(
-                    color: Color.fromARGB(255, 50, 50, 50),
-                    fontWeight: FontWeight.bold),
+        Column(
+          children: [
+            Container( // Clock
+            padding: EdgeInsets.fromLTRB(100, 150, 100, 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  DigitalClock(
+                    digitAnimationStyle: Curves.elasticOut,
+                    is24HourTimeFormat: false,
+                    areaDecoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    hourMinuteDigitTextStyle: TextStyle(
+                      color: Color.fromARGB(255, 55, 55, 55),
+                      fontSize: 50,
+                    ),
+                    amPmDigitTextStyle: TextStyle(
+                        color: Color.fromARGB(255, 50, 50, 50),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+
+            Container( //reset button    
+                padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
+                child: SizedBox(
+                    height: 50,
+                    width: 150,
+                    child: RaisedButton(
+                      color: Colors.grey,
+                      child: Text(
+                        'reset',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                      // onPressed: null,
+                      onPressed: () => _reset(),
+                    ))),
+          ],
         ),
         
-        Container( // start button
+        Container( // gas button
           padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
 
           child: Listener(
             onPointerDown: (details) {
               _buttonPressed = true;
               _notButtonPressed = false;
-              // _increaseCounterWhilePressed();
               _increasePointerValueWhilePressed();
             },
             onPointerUp: (details) {
@@ -520,7 +603,7 @@ class _TachoState extends State<Tacho> {
           ),
         ),
         
-        Row(
+        Row( // tank bar
           children: [
             Container(
               alignment: Alignment.topLeft,
@@ -542,6 +625,7 @@ class _TachoState extends State<Tacho> {
                 ],
               )   // Callback that sets the selected popup menu ite
             ),
+
             Container( // Gas Staion Icon
               padding: EdgeInsets.fromLTRB(110, 20, 0, 62),
               alignment: Alignment.bottomRight,
@@ -550,6 +634,7 @@ class _TachoState extends State<Tacho> {
                 size: 40,
               ),
             ),
+
             Container( // Tank Level
               child: Center(
                 child: SizedBox(
