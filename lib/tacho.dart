@@ -89,12 +89,13 @@ class _TachoState extends State<Tacho> {
     });
   }
 
-  changeDuration() {
-    Random random = Random();
-    int newDuration = duration + random.nextInt(100);
-    print('Random Pointer Duration $newDuration');
-    return newDuration;
-  }
+  // to randomize the Duration of the increasing Pinter Value
+  // changeDuration() {
+  //   Random random = Random();
+  //   int newDuration = duration + random.nextInt(100);
+  //   print('Random Pointer Duration $newDuration');
+  //   return newDuration;
+  // }
 
 
 // whie pressed gas button
@@ -112,7 +113,9 @@ class _TachoState extends State<Tacho> {
       });
 
       // wait a second
-      await Future.delayed(Duration(milliseconds: changeDuration()));
+      await Future.delayed(Duration(milliseconds: 60));
+      // await Future.delayed(Duration(milliseconds: changeDuration));
+
     }
 
     _loopActive = false;
@@ -147,7 +150,7 @@ class _TachoState extends State<Tacho> {
       });
 
       // wait a second
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(Duration(milliseconds: 60));
     }
 
     _loopActive = false;
@@ -337,11 +340,11 @@ class _TachoState extends State<Tacho> {
                   _onMenuItemSelected(value as double);
                 },
             itemBuilder: (ctx) => [
-              _buildPopupMenuItem('Widget Size - Small', Icons.search, Options.small.index as double),
-              _buildPopupMenuItem('Widget Size - Medium', Icons.upload, Options.medium.index as double),
-              _buildPopupMenuItem('Widget Size - Big', Icons.copy, Options.big.index as double),
-              _buildPopupMenuItem('Exit', Icons.exit_to_app, Options.exit.index as double),
-            ],
+                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
+                ],
           ) 
           ],
          
@@ -354,7 +357,8 @@ class _TachoState extends State<Tacho> {
       childAspectRatio: (itemWidth / itemHeight),
 
       children: <Widget>[
-        Row(
+
+        Row( // Revolutions
           children: [
             Container(
               alignment: Alignment.topLeft,
@@ -436,7 +440,7 @@ class _TachoState extends State<Tacho> {
                       BoxDecoration(
                         color: Colors.white,
                         border: Border.all(width: 2),
-                        borderRadius: BorderRadius.circular(30),
+                        
                         ),
                   padding: EdgeInsets.all(16.0),
                   child: Text(
@@ -468,7 +472,7 @@ class _TachoState extends State<Tacho> {
           ],
         ),
         
-        Row(
+        Row( // Tacho
           children: [
             Container(
               alignment: Alignment.topLeft,
@@ -483,10 +487,10 @@ class _TachoState extends State<Tacho> {
                   _onMenuItemSelectedKMH(value as double);
                 },
                 itemBuilder: (ctx) => [
-                  _buildPopupMenuItemKMH('Font Size - Small', Icons.search, Options.small.index as double),
-                  _buildPopupMenuItemKMH('Font Size - Medium', Icons.upload, Options.medium.index as double),
-                  _buildPopupMenuItemKMH('Font Size - Big', Icons.copy, Options.big.index as double),
-                  _buildPopupMenuItemKMH('Exit', Icons.exit_to_app, Options.exit.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
               )   // Callback that sets the selected popup menu ite
             ),
@@ -527,7 +531,7 @@ class _TachoState extends State<Tacho> {
           ],
         ),
         
-        Column(
+        Column( // Clock
           children: [
             Container( // Clock
             padding: EdgeInsets.fromLTRB(100, 150, 100, 20),
@@ -596,7 +600,7 @@ class _TachoState extends State<Tacho> {
                     ),
               padding: EdgeInsets.all(16.0),
               child: Text(
-                'gib Gas',
+                'accelerate',
                 textAlign: TextAlign.center,
               ),
             ),
@@ -618,10 +622,10 @@ class _TachoState extends State<Tacho> {
                   _onMenuItemSelectedTank(value as double);
                 },
                 itemBuilder: (ctx) => [
-                  _buildPopupMenuItemTank('Font Size - Small', Icons.search, Options.small.index as double),
-                  _buildPopupMenuItemTank('Font Size - Medium', Icons.upload, Options.medium.index as double),
-                  _buildPopupMenuItemTank('Font Size - Big', Icons.copy, Options.big.index as double),
-                  _buildPopupMenuItemTank('Exit', Icons.exit_to_app, Options.exit.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
               )   // Callback that sets the selected popup menu ite
             ),
@@ -641,6 +645,7 @@ class _TachoState extends State<Tacho> {
                   height: 250,
                   width: 100,
                   child: SfLinearGauge(
+                    interval: 25,
                     orientation: LinearGaugeOrientation.vertical,
                     axisTrackStyle: LinearAxisTrackStyle(thickness: custWidgetSize-10),
                     axisLabelStyle: TextStyle(fontSize: custSizeTank),
@@ -656,6 +661,7 @@ class _TachoState extends State<Tacho> {
             ),
           ],
         ),
+      
       ],
     ));
   }
