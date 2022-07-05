@@ -41,7 +41,7 @@ class _TachoState extends State<Tacho> {
 
   void _setNegativePointerDuration() {
     pointerAnimation = true;
-    tachoPointerValue--;
+    tachoPointerValue -= 0.5;
     revolutionsPointerValue = tachoPointerValue / 38;
     if (tachoPointerValue == 0.0) _reset();
     print(
