@@ -283,19 +283,18 @@ class _TachoState extends State<Tacho> {
 
   double custWidgetSize = 40;
 
-    PopupMenuItem _buildPopupMenuItem(String title, IconData iconData, double position) {
-      return PopupMenuItem(
-        value: position,
-        child:  Row(
-          children: [
-            Icon(iconData, color: Colors.black),
-            Text(title),
-          ],
-        ),
-      );
-    }
+  PopupMenuItem _buildPopupMenuItem(String title, IconData iconData, double position) {
+    return PopupMenuItem(
+      value: position,
+      child:  Row(
+        children: [
+          Icon(iconData, color: Colors.black),
+          Text(title),
+        ],
+      ),
+    );
+  }
       
-
   _onMenuItemSelected(double value) {
     setState(() {
       _popupMenuItemIndex = value;
@@ -340,10 +339,10 @@ class _TachoState extends State<Tacho> {
                   _onMenuItemSelected(value as double);
                 },
             itemBuilder: (ctx) => [
-                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
-                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
+                  _buildPopupMenuItem('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItem('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItem('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItem('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
           ) 
           ],
