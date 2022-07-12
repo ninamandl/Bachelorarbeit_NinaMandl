@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 
 // view
-import 'package:speedometer_02/tacho.dart';
+import 'package:speedometer_02/light_panel.dart';
+import 'package:speedometer_02/dark_panel.dart';
+
 
 enum Options { small, medium, big, exit }
 
@@ -41,7 +43,8 @@ class _HomeState extends State<Home> {
     return Scaffold(
       
         body:Container(
-          child: Tacho(),
+          child: DarkPanel(),
+        //  child: LightPanel(),
         ),
       );
   }
