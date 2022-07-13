@@ -46,7 +46,7 @@ class _DarkPanelState extends State<DarkPanel> {
     revolutionsPointerValue = tachoPointerValue / 38;
     if (tachoPointerValue == 0.0) _reset();
     print(
-        'Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue  - going down');
+        'Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue  - going down');
   }
 
   void _stop() {
@@ -392,9 +392,9 @@ class _DarkPanelState extends State<DarkPanel> {
                       minimum: 0,
                       maximum: 6,
                       interval: 1,
-                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize, color: Colors.grey),
+                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize, color: Colors.white70),
                       axisLabelStyle: GaugeTextStyle(fontSize: custSizeRPM, color: Colors.yellow),
-                      minorTickStyle: MinorTickStyle(color: Colors.white70),
+                      minorTickStyle: MinorTickStyle(color: Colors.grey[600]),
                       majorTickStyle: MajorTickStyle(color: Colors.white70),
                       radiusFactor: 0.8,
                       
@@ -510,16 +510,16 @@ class _DarkPanelState extends State<DarkPanel> {
                   RadialAxis(
                       minimum: 0,
                       maximum: 180,
-                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize, color: Colors.grey[600],),
-                      axisLabelStyle: GaugeTextStyle(fontSize: custSizeKMH, color: Colors.white70,),
-                      minorTickStyle: MinorTickStyle(color: Colors.white70),
-                      majorTickStyle: MajorTickStyle(color: Colors.grey[600]),
+                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize, color: Colors.white70,),
+                      axisLabelStyle: GaugeTextStyle(fontSize: custSizeKMH, color: Colors.yellow,),
+                      minorTickStyle: MinorTickStyle(color: Colors.grey[600]),
+                      majorTickStyle: MajorTickStyle(color: Colors.white70),
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
                           value: tachoPointerValue,
                           width: custWidgetSize,
-                          color: Colors.white,
+                          color: Colors.yellow,
                         )
                       ],
                       annotations: <GaugeAnnotation>[
@@ -530,7 +530,7 @@ class _DarkPanelState extends State<DarkPanel> {
                                         .toString(), //noch ändern zu current value
                                     style: TextStyle(
                                         fontSize: 20,
-                                        color: Colors.white70,
+                                        color: Colors.yellow,
                                         fontWeight: FontWeight.bold))),
                             angle: 90,
                             positionFactor: 0.5),
@@ -658,15 +658,15 @@ class _DarkPanelState extends State<DarkPanel> {
                   child: SfLinearGauge(
                     interval: 25,
                     orientation: LinearGaugeOrientation.vertical,
-                    axisTrackStyle: LinearAxisTrackStyle(thickness: custWidgetSize-10, color: Colors.grey[600]),
-                    axisLabelStyle: TextStyle(fontSize: custSizeTank, color: Colors.white70),
-                    minorTickStyle: LinearTickStyle(color: Colors.white70),
+                    axisTrackStyle: LinearAxisTrackStyle(thickness: custWidgetSize-10, color: Colors.white70),
+                    axisLabelStyle: TextStyle(fontSize: custSizeTank, color: Colors.yellow),
+                    minorTickStyle: LinearTickStyle(color: Colors.grey[600]),
                     majorTickStyle: LinearTickStyle(color: Colors.white70),
                     barPointers: [
                       LinearBarPointer(
                         value: tankPointerValue,
                         thickness: custWidgetSize-10,
-                        color: Colors.white70,
+                        color: Colors.yellow,
                     )],
                   ),
                 ),
