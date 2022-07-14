@@ -178,7 +178,7 @@ class _LightPanelState extends State<LightPanel> {
       value: position,
       child:  Row(
         children: [
-          Icon(iconData, color: Colors.black, size: indivitualSize,),
+          Icon(iconData, color: Colors.indigo[900], size: indivitualSize,),
           Text(title),
         ],
       ),
@@ -217,7 +217,7 @@ class _LightPanelState extends State<LightPanel> {
       value: position,
       child:  Row(
         children: [
-          Icon(iconData, color: Colors.black,),
+          Icon(iconData, color: Colors.indigo[900],),
           Text(title),
         ],
       ),
@@ -251,7 +251,7 @@ class _LightPanelState extends State<LightPanel> {
           value: position,
           child:  Row(
             children: [
-              Icon(iconData, color: Colors.black,),
+              Icon(iconData, color: Colors.indigo[900],),
               Text(title),
             ],
           ),
@@ -287,7 +287,7 @@ class _LightPanelState extends State<LightPanel> {
       value: position,
       child:  Row(
         children: [
-          Icon(iconData, color: Colors.black),
+          Icon(iconData, color: Colors.indigo[900]),
           Text(title),
         ],
       ),
@@ -329,24 +329,28 @@ class _LightPanelState extends State<LightPanel> {
     final double itemWidth = (size.width);
 
     return Scaffold(
+      backgroundColor: Colors.white70,
       appBar: AppBar(
-          title: Text("Instrument Panel - Testing"),
-          backgroundColor: Color.fromARGB(255, 34, 34, 34),
-          actions: [PopupMenuButton(
-            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-            onSelected: (value) {
-                  _onMenuItemSelected(value as double);
-                },
-            itemBuilder: (ctx) => [
-                  _buildPopupMenuItem('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
-                  _buildPopupMenuItem('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
-                  _buildPopupMenuItem('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
-                  _buildPopupMenuItem('Exit', Icons.exit_to_app, Options.exit.index as double),
-                ],
-          ) 
-          ],
-         
-        ),
+        iconTheme: IconThemeData(color: Colors.indigo[900], size: 10.0),
+        title: Text(
+          "Instrument Panel - Testing",
+          style: TextStyle(
+            color: Colors.indigo[900]),),
+        backgroundColor: Colors.white70,
+        actions: [PopupMenuButton(
+          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+          onSelected: (value) {
+                _onMenuItemSelected(value as double);
+              },
+          itemBuilder: (ctx) => [
+                _buildPopupMenuItem('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                _buildPopupMenuItem('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                _buildPopupMenuItem('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                _buildPopupMenuItem('Exit', Icons.exit_to_app, Options.exit.index as double),
+              ],
+        ) 
+        ],
+      ),
 
       
       body: GridView.count(
@@ -389,8 +393,10 @@ class _LightPanelState extends State<LightPanel> {
                       minimum: 0,
                       maximum: 6,
                       interval: 1,
-                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize),
+                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize, color: Colors.grey[300],),
                       axisLabelStyle: GaugeTextStyle(fontSize: custSizeRPM, color: Colors.indigo[900]),
+                      minorTickStyle: MinorTickStyle(color: Colors.grey[300]),
+                      majorTickStyle: MajorTickStyle(color: Colors.indigo[900]),
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
@@ -406,8 +412,8 @@ class _LightPanelState extends State<LightPanel> {
                                     'rpm'.toString(), //noch ändern zu current value
                                     style: TextStyle(
                                         fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.indigo[900]))),
+                                        color: Colors.indigo[900],
+                                        fontWeight: FontWeight.bold,))),
                             angle: 90,
                             positionFactor: 0.5),
                         //add more annotations 'texts inside guage' here
@@ -438,13 +444,14 @@ class _LightPanelState extends State<LightPanel> {
                   decoration:
                       BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(width: 2),
+                        border: Border.all(width: 2, color: Colors.indigo.shade900),
                         borderRadius: BorderRadius.circular(10),
                         ),
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'refill tank',
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.indigo[900]),
                   ),
                 ),
               ),
@@ -456,12 +463,12 @@ class _LightPanelState extends State<LightPanel> {
                 height: 50,
                 width: 150,
                 child: RaisedButton(
-                  color: Colors.grey,
+                  color: Colors.grey[400],
                   child: Text(
                     'stop',
                     style: TextStyle(
                       fontSize: 20.0,
-                      color: Colors.black,
+                      color: Colors.indigo[900],
                     ),
                   ),
                   // onPressed: null,
@@ -480,7 +487,7 @@ class _LightPanelState extends State<LightPanel> {
                 child: Icon(
                   Icons.settings,
                   size: 30,
-                  color: Colors.black,
+                  color: Colors.indigo[900],
                   ),
                 onSelected: (value) {
                   _onMenuItemSelectedKMH(value as double);
@@ -503,14 +510,16 @@ class _LightPanelState extends State<LightPanel> {
                   RadialAxis(
                       minimum: 0,
                       maximum: 180,
-                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize),
-                      axisLabelStyle: GaugeTextStyle(fontSize: custSizeKMH),
+                      axisLineStyle: AxisLineStyle(thickness: custWidgetSize, color: Colors.grey[300],),
+                      axisLabelStyle: GaugeTextStyle(fontSize: custSizeKMH, color: Colors.indigo[900],),
+                      minorTickStyle: MinorTickStyle(color: Colors.grey[400]),
+                      majorTickStyle: MajorTickStyle(color: Colors.indigo[900]),
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
                           value: tachoPointerValue,
                           width: custWidgetSize,
-                          color: Colors.black,
+                          color: Colors.indigo[900],
                         )
                       ],
                       annotations: <GaugeAnnotation>[
@@ -521,6 +530,7 @@ class _LightPanelState extends State<LightPanel> {
                                         .toString(), //noch ändern zu current value
                                     style: TextStyle(
                                         fontSize: 20,
+                                        color: Colors.indigo[900],
                                         fontWeight: FontWeight.bold))),
                             angle: 90,
                             positionFactor: 0.5),
@@ -545,11 +555,11 @@ class _LightPanelState extends State<LightPanel> {
                       color: Colors.transparent,
                     ),
                     hourMinuteDigitTextStyle: TextStyle(
-                      color: Color.fromARGB(255, 55, 55, 55),
+                      color: Colors.indigo[900],
                       fontSize: 50,
                     ),
                     amPmDigitTextStyle: TextStyle(
-                        color: Color.fromARGB(255, 50, 50, 50),
+                        color: Colors.indigo[900],
                         fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -562,12 +572,12 @@ class _LightPanelState extends State<LightPanel> {
                     height: 50,
                     width: 150,
                     child: RaisedButton(
-                      color: Colors.grey,
+                      color: Colors.grey[400],
                       child: Text(
                         'reset',
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: Colors.black,
+                          color: Colors.indigo[900],
                         ),
                       ),
                       // onPressed: null,
@@ -594,13 +604,14 @@ class _LightPanelState extends State<LightPanel> {
               decoration:
                   BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(width: 5),
+                    border: Border.all(width: 5, color: Colors.indigo.shade900),
                     borderRadius: BorderRadius.circular(30),
                     ),
               padding: EdgeInsets.all(16.0),
               child: Text(
                 'accelerate',
                 textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.indigo[900]),
               ),
             ),
           ),
@@ -615,7 +626,7 @@ class _LightPanelState extends State<LightPanel> {
                 child: Icon(
                   Icons.settings,
                   size: 30,
-                  color: Colors.black,
+                  color: Colors.indigo[900],
                   ),
                 onSelected: (value) {
                   _onMenuItemSelectedTank(value as double);
@@ -635,6 +646,7 @@ class _LightPanelState extends State<LightPanel> {
               child: Icon(
                 Icons.local_gas_station_sharp,
                 size: 40,
+                color: Colors.grey[400],
               ),
             ),
 
@@ -646,13 +658,15 @@ class _LightPanelState extends State<LightPanel> {
                   child: SfLinearGauge(
                     interval: 25,
                     orientation: LinearGaugeOrientation.vertical,
-                    axisTrackStyle: LinearAxisTrackStyle(thickness: custWidgetSize-10),
-                    axisLabelStyle: TextStyle(fontSize: custSizeTank),
+                    axisTrackStyle: LinearAxisTrackStyle(thickness: custWidgetSize-10, color: Colors.grey[300]),
+                    axisLabelStyle: TextStyle(fontSize: custSizeTank, color: Colors.indigo[900]),
+                    minorTickStyle: LinearTickStyle(color: Colors.grey[400]),
+                    majorTickStyle: LinearTickStyle(color: Colors.indigo[900]),
                     barPointers: [
                       LinearBarPointer(
                         value: tankPointerValue,
                         thickness: custWidgetSize-10,
-                        color: Colors.black,
+                        color: Colors.indigo[900],
                     )],
                   ),
                 ),

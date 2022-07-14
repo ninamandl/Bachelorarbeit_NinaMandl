@@ -331,23 +331,27 @@ class _DarkPanelState extends State<DarkPanel> {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
-          title: Text("Instrument Panel - Testing"),
-          backgroundColor: Color.fromARGB(255, 34, 34, 34),
-          actions: [PopupMenuButton(
-            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-            onSelected: (value) {
-                  _onMenuItemSelected(value as double);
-                },
-            itemBuilder: (ctx) => [
-                  _buildPopupMenuItem('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
-                  _buildPopupMenuItem('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
-                  _buildPopupMenuItem('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
-                  _buildPopupMenuItem('Exit', Icons.exit_to_app, Options.exit.index as double),
-                ],
-          ) 
-          ],
-         
-        ),
+        iconTheme: IconThemeData(color: Colors.white70, size: 10.0),
+        title: Text(
+          "Instrument Panel - Testing",
+          style: TextStyle(
+            color: Colors.indigo[900])),
+        backgroundColor: Color.fromARGB(255, 34, 34, 34),
+        actions: [PopupMenuButton(
+          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+          onSelected: (value) {
+                _onMenuItemSelected(value as double);
+              },
+          itemBuilder: (ctx) => [
+                _buildPopupMenuItem('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                _buildPopupMenuItem('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                _buildPopupMenuItem('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                _buildPopupMenuItem('Exit', Icons.exit_to_app, Options.exit.index as double),
+              ],
+        ) 
+        ],
+        
+      ),
 
       
       body: GridView.count(
