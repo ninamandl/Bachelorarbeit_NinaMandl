@@ -74,6 +74,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.4"
+  http_parser:
+    dependency: transitive
+    description:
+      name: http_parser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.1"
   intl:
     dependency: transitive
     description:
@@ -155,14 +169,14 @@ packages:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.56"
+    version: "20.2.39"
   syncfusion_flutter_gauges:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_gauges
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.56"
+    version: "20.2.39"
   term_glyph:
     dependency: transitive
     description:

@@ -335,7 +335,7 @@ class _DarkPanelState extends State<DarkPanel> {
         title: Text(
           "Instrument Panel - Testing",
           style: TextStyle(
-            color: Colors.indigo[900])),
+            color: Colors.white70)),
         backgroundColor: Color.fromARGB(255, 34, 34, 34),
         actions: [PopupMenuButton(
           padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
@@ -350,17 +350,14 @@ class _DarkPanelState extends State<DarkPanel> {
               ],
         ) 
         ],
-        
       ),
 
-      
+    
       body: GridView.count(
-      
       primary: false,
       crossAxisCount: 3,
       childAspectRatio: (itemWidth / itemHeight),
       
-
       children: <Widget>[
 
         Row( // Revolutions
@@ -401,7 +398,6 @@ class _DarkPanelState extends State<DarkPanel> {
                       minorTickStyle: MinorTickStyle(color: Colors.grey[600]),
                       majorTickStyle: MajorTickStyle(color: Colors.white70),
                       radiusFactor: 0.8,
-                      
                       pointers: <GaugePointer>[
                         RangePointer(
                           value: revolutionsPointerValue,
@@ -466,8 +462,10 @@ class _DarkPanelState extends State<DarkPanel> {
             child: SizedBox(
                 height: 50,
                 width: 150,
-                child: RaisedButton(
-                  color: Colors.grey[600],
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[600], // Background color
+                  ),
                   child: Text(
                     'stop',
                     style: TextStyle(
@@ -497,10 +495,10 @@ class _DarkPanelState extends State<DarkPanel> {
                   _onMenuItemSelectedKMH(value as double);
                 },
                 itemBuilder: (ctx) => [
-                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
-                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItemKMH('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
               )   // Callback that sets the selected popup menu ite
             ),
@@ -575,8 +573,10 @@ class _DarkPanelState extends State<DarkPanel> {
                 child: SizedBox(
                     height: 50,
                     width: 150,
-                    child: RaisedButton(
-                      color: Colors.grey[600],
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.grey[600], // Background color
+                      ),
                       child: Text(
                         'reset',
                         style: TextStyle(
@@ -636,10 +636,10 @@ class _DarkPanelState extends State<DarkPanel> {
                   _onMenuItemSelectedTank(value as double);
                 },
                 itemBuilder: (ctx) => [
-                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
-                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
+                  _buildPopupMenuItemTank('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemTank('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemTank('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItemTank('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
               )   // Callback that sets the selected popup menu ite
             ),

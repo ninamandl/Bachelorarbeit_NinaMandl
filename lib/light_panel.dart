@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, use_key_in_widget_constructors, prefer_final_fields, deprecated_member_use, constant_identifier_names, unused_field, avoid_print
-// ignore_for_file: prefer_const_literals_to_create_immutables
+
+// ignore_for_file: avoid_print, constant_identifier_names, unused_field, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
@@ -9,6 +10,8 @@ enum Options { small, medium, big, exit }
 
 
 class LightPanel extends StatefulWidget {
+  const LightPanel({Key? key}) : super(key: key);
+
   @override
   State<LightPanel> createState() => _LightPanelState();
 }
@@ -112,7 +115,7 @@ class _LightPanelState extends State<LightPanel> {
       });
 
       // wait a second
-      await Future.delayed(Duration(milliseconds: 60));
+      await Future.delayed(const Duration(milliseconds: 60));
       // await Future.delayed(Duration(milliseconds: changeDuration));
 
     }
@@ -127,7 +130,7 @@ class _LightPanelState extends State<LightPanel> {
         _setNegativePointerDuration();
       });
 
-      await Future.delayed(Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 75));
     }
   }
 
@@ -149,7 +152,7 @@ class _LightPanelState extends State<LightPanel> {
       });
 
       // wait a second
-      await Future.delayed(Duration(milliseconds: 60));
+      await Future.delayed(const Duration(milliseconds: 60));
     }
 
     _loopActive = false;
@@ -338,7 +341,7 @@ class _LightPanelState extends State<LightPanel> {
             color: Colors.indigo[900]),),
         backgroundColor: Colors.white70,
         actions: [PopupMenuButton(
-          padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+          padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
           onSelected: (value) {
                 _onMenuItemSelected(value as double);
               },
@@ -364,7 +367,7 @@ class _LightPanelState extends State<LightPanel> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: PopupMenuButton(
                 child: Icon(
                   Icons.settings,
@@ -428,7 +431,7 @@ class _LightPanelState extends State<LightPanel> {
           children: [
             
             Container( // refill Tank button
-              padding: EdgeInsets.fromLTRB(100, 100, 100, 20),
+              padding: const EdgeInsets.fromLTRB(100, 100, 100, 20),
               child: Listener(
                 onPointerDown: (details) {
                   _buttonPressed = true;
@@ -447,7 +450,7 @@ class _LightPanelState extends State<LightPanel> {
                         border: Border.all(width: 2, color: Colors.indigo.shade900),
                         borderRadius: BorderRadius.circular(10),
                         ),
-                  padding: EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Text(
                     'refill tank',
                     textAlign: TextAlign.center,
@@ -458,12 +461,14 @@ class _LightPanelState extends State<LightPanel> {
             ),
 
             Container( // stop button
-            padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
+            padding: const EdgeInsets.fromLTRB(100, 20, 100, 20),
             child: SizedBox(
                 height: 50,
                 width: 150,
-                child: RaisedButton(
-                  color: Colors.grey[400],
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[400], // Background color
+                  ),
                   child: Text(
                     'stop',
                     style: TextStyle(
@@ -482,7 +487,7 @@ class _LightPanelState extends State<LightPanel> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: PopupMenuButton(
                 child: Icon(
                   Icons.settings,
@@ -493,10 +498,10 @@ class _LightPanelState extends State<LightPanel> {
                   _onMenuItemSelectedKMH(value as double);
                 },
                 itemBuilder: (ctx) => [
-                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
-                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemKMH('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItemKMH('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
               )   // Callback that sets the selected popup menu ite
             ),
@@ -543,7 +548,7 @@ class _LightPanelState extends State<LightPanel> {
         Column( // Clock + reset Button
           children: [
             Container( // Clock
-            padding: EdgeInsets.fromLTRB(100, 150, 100, 20),
+            padding: const EdgeInsets.fromLTRB(100, 150, 100, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -551,7 +556,7 @@ class _LightPanelState extends State<LightPanel> {
                   DigitalClock(
                     digitAnimationStyle: Curves.elasticOut,
                     is24HourTimeFormat: false,
-                    areaDecoration: BoxDecoration(
+                    areaDecoration: const BoxDecoration(
                       color: Colors.transparent,
                     ),
                     hourMinuteDigitTextStyle: TextStyle(
@@ -567,12 +572,14 @@ class _LightPanelState extends State<LightPanel> {
             ),
 
             Container( //reset button    
-                padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
+                padding: const EdgeInsets.fromLTRB(100, 20, 100, 20),
                 child: SizedBox(
                     height: 50,
                     width: 150,
-                    child: RaisedButton(
-                      color: Colors.grey[400],
+                    child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.grey[400], // Background color
+                    ),
                       child: Text(
                         'reset',
                         style: TextStyle(
@@ -587,7 +594,7 @@ class _LightPanelState extends State<LightPanel> {
         ),
         
         Container( // gas button
-          padding: EdgeInsets.fromLTRB(100, 20, 100, 20),
+          padding: const EdgeInsets.fromLTRB(100, 20, 100, 20),
 
           child: Listener(
             onPointerDown: (details) {
@@ -607,7 +614,7 @@ class _LightPanelState extends State<LightPanel> {
                     border: Border.all(width: 5, color: Colors.indigo.shade900),
                     borderRadius: BorderRadius.circular(30),
                     ),
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Text(
                 'accelerate',
                 textAlign: TextAlign.center,
@@ -621,7 +628,7 @@ class _LightPanelState extends State<LightPanel> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
               child: PopupMenuButton(
                 child: Icon(
                   Icons.settings,
@@ -632,16 +639,16 @@ class _LightPanelState extends State<LightPanel> {
                   _onMenuItemSelectedTank(value as double);
                 },
                 itemBuilder: (ctx) => [
-                  _buildPopupMenuItemRPM('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
-                  _buildPopupMenuItemRPM('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
-                  _buildPopupMenuItemRPM('Exit', Icons.exit_to_app, Options.exit.index as double),
+                  _buildPopupMenuItemTank('Font Size - Small', Icons.arrow_downward, Options.small.index as double),
+                  _buildPopupMenuItemTank('Font Size - Medium', Icons.arrow_forward, Options.medium.index as double),
+                  _buildPopupMenuItemTank('Font Size - Big', Icons.arrow_upward, Options.big.index as double),
+                  _buildPopupMenuItemTank('Exit', Icons.exit_to_app, Options.exit.index as double),
                 ],
               )   // Callback that sets the selected popup menu ite
             ),
 
             Container( // Gas Staion Icon
-              padding: EdgeInsets.fromLTRB(110, 20, 0, 62),
+              padding: const EdgeInsets.fromLTRB(110, 20, 0, 62),
               alignment: Alignment.bottomRight,
               child: Icon(
                 Icons.local_gas_station_sharp,

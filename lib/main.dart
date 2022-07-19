@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 // view
 import 'package:speedometer_02/light_panel.dart';
-import 'package:speedometer_02/dark_panel.dart';
 
 
 enum Options { small, medium, big, exit }
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Instrument Panel',
       home: const Home(title: 'Instrument Panel',),
-    );
+     );
   }
 }
 
