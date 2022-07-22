@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 enum Options { small, medium, big, exit }
 
@@ -27,7 +29,30 @@ class _LightPanelState extends State<LightPanel> {
   bool _loopActive = false;
   bool _notButtonPressed = false;
 
-  
+
+// ----------> writing data to a file <--------- start
+  // Find the correct local path
+  Future<String> get _localPath async {
+  final directory = await getApplicationDocumentsDirectory();
+
+  return directory.path;
+}
+
+  // Create a reference to the file location
+Future<File> get _localFile async {
+  final path = await _localPath;
+  return File('$path/counter.txt');
+}
+
+  // Write data to the file
+Future<File> writeCounter(int counter) async {
+  final file = await _localFile;
+
+  // Write the file
+  return file.writeAsString('$counter');
+}
+
+// ----------> writing data to a file <--------- end
 
   void _setPointerDuration() {
     setState(() {
@@ -91,13 +116,8 @@ class _LightPanelState extends State<LightPanel> {
     });
   }
 
-  // to randomize the Duration of the increasing Pinter Value
-  // changeDuration() {
-  //   Random random = Random();
-  //   int newDuration = duration + random.nextInt(100);
-  //   print('Random Pointer Duration $newDuration');
-  //   return newDuration;
-  // }
+
+
 
 
 // whie pressed gas button
@@ -334,7 +354,7 @@ class _LightPanelState extends State<LightPanel> {
     return Scaffold(
       backgroundColor: Colors.white70,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.indigo[900], size: 10.0),
+        iconTheme: IconThemeData(color: Colors.indigo[900], size: 25.0),
         title: Text(
           "Instrument Panel - Testing",
           style: TextStyle(
@@ -400,6 +420,7 @@ class _LightPanelState extends State<LightPanel> {
                       axisLabelStyle: GaugeTextStyle(fontSize: custSizeRPM, color: Colors.indigo[900]),
                       minorTickStyle: MinorTickStyle(color: Colors.grey[300]),
                       majorTickStyle: MajorTickStyle(color: Colors.indigo[900]),
+                      showLastLabel: true,
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
@@ -519,6 +540,7 @@ class _LightPanelState extends State<LightPanel> {
                       axisLabelStyle: GaugeTextStyle(fontSize: custSizeKMH, color: Colors.indigo[900],),
                       minorTickStyle: MinorTickStyle(color: Colors.grey[400]),
                       majorTickStyle: MajorTickStyle(color: Colors.indigo[900]),
+                      showLastLabel: true,
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(

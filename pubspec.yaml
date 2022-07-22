@@ -36,7 +36,7 @@ dependencies:
   syncfusion_flutter_gauges: ^20.1.61
   slide_digital_clock: ^1.0.2
   flutter_animation_progress_bar: ^2.2.1
-  http: ^0.13.4
+  path_provider: ^2.0.11
 
 
 dev_dependencies:

@@ -331,7 +331,7 @@ class _DarkPanelState extends State<DarkPanel> {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white70, size: 10.0),
+        iconTheme: IconThemeData(color: Colors.white70, size: 25.0),
         title: Text(
           "Instrument Panel - Testing",
           style: TextStyle(
@@ -397,6 +397,7 @@ class _DarkPanelState extends State<DarkPanel> {
                       axisLabelStyle: GaugeTextStyle(fontSize: custSizeRPM, color: Colors.yellow),
                       minorTickStyle: MinorTickStyle(color: Colors.grey[600]),
                       majorTickStyle: MajorTickStyle(color: Colors.white70),
+                      showLastLabel: true,
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
@@ -516,6 +517,7 @@ class _DarkPanelState extends State<DarkPanel> {
                       axisLabelStyle: GaugeTextStyle(fontSize: custSizeKMH, color: Colors.yellow,),
                       minorTickStyle: MinorTickStyle(color: Colors.grey[600]),
                       majorTickStyle: MajorTickStyle(color: Colors.white70),
+                      showLastLabel: true,
                       radiusFactor: 0.8,
                       pointers: <GaugePointer>[
                         RangePointer(
