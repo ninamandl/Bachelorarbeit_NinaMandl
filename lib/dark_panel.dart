@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 enum Options { small, medium, big, exit }
 
 
-
 class DarkPanel extends StatefulWidget {
+  const DarkPanel({Key? key}) : super(key: key);
+
   @override
   State<DarkPanel> createState() => _DarkPanelState();
 }
@@ -24,6 +27,34 @@ class _DarkPanelState extends State<DarkPanel> {
   bool _loopActive = false;
   bool _notButtonPressed = false;
 
+//-----------> Server <----------- Start
+
+  // This function will send the message to our backend.
+  void sendMessage(msg) {
+    WebSocketChannel? channel;
+    // We use a try - catch statement, because the connection might fail.
+    try {
+      // Connect to our backend.
+      channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
+    } catch (e) {
+      // If there is any error that might be because you need to use another connection.
+      print("Error on connecting to websocket: " + e.toString());
+    }
+    // Send message to backend
+    channel?.sink.add(msg);
+
+    // Listen for any message from backend
+    channel?.stream.listen((event) {
+      // Just making sure it is not empty
+      if (event!.isNotEmpty) {
+        print(event);
+        // Now only close the connection and we are done here!
+        channel!.sink.close();
+      } 
+    });
+  }
+
+//-----------> Server <----------- Ende
   
 
   void _setPointerDuration() {
@@ -36,7 +67,8 @@ class _DarkPanelState extends State<DarkPanel> {
       if (tankPointerValue < 0) tankPointerValue = 0;
       if (tankPointerValue > 100) tankPointerValue = 100;
       if (tachoPointerValue >= 180) tachoPointerValue = 180;
-      print('Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue - going up');
+      print('GOING UP ---> Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue');
+      sendMessage('GOING UP ---> Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue');
     });
   }
 
@@ -45,8 +77,8 @@ class _DarkPanelState extends State<DarkPanel> {
     tachoPointerValue -= 0.5;
     revolutionsPointerValue = tachoPointerValue / 38;
     if (tachoPointerValue == 0.0) _reset();
-    print(
-        'Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue  - going down');
+    print('GOING DOWN ---> Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue');
+    sendMessage('GOING DOWN ---> Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue');
   }
 
   void _stop() {
@@ -54,7 +86,8 @@ class _DarkPanelState extends State<DarkPanel> {
       duration = 0;
       _buttonPressed = false;
       _notButtonPressed = false;
-      print('stop');
+      print('STOP BUTTONn');
+      sendMessage('STOP BUTTON');
     });
   }
 
@@ -65,7 +98,8 @@ class _DarkPanelState extends State<DarkPanel> {
       duration = 0;
       _buttonPressed = false;
       _notButtonPressed = false;
-      print('reset');
+      print('RESET BUTTON');
+      sendMessage('RESET BUTTON');
     });
   }
 
@@ -75,7 +109,8 @@ class _DarkPanelState extends State<DarkPanel> {
       tankPointerValue ++;
       if (tankPointerValue < 0) tankPointerValue = 0;
       if (tankPointerValue > 100) tankPointerValue = 100;
-      print('Tank: $tankPointerValue');
+      print('REFILL BUTTON ---> Tank: $tankPointerValue');
+      sendMessage('REFILL BUTTON ---> Tank: $tankPointerValue');
     });
   }
 
@@ -84,20 +119,13 @@ class _DarkPanelState extends State<DarkPanel> {
       duration = 0;
       _buttonPressed = false;
       _notButtonPressed = false;
-      print('stop refill');
+      print('STOP / STOP REFILL');
+      sendMessage('STOP / STOP REFILL');
     });
   }
 
-  // to randomize the Duration of the increasing Pinter Value
-  // changeDuration() {
-  //   Random random = Random();
-  //   int newDuration = duration + random.nextInt(100);
-  //   print('Random Pointer Duration $newDuration');
-  //   return newDuration;
-  // }
 
-
-// whie pressed gas button
+// ---------> whie pressed gas button <---------
 
   // Pointer going up
   void _increasePointerValueWhilePressed() async {
@@ -131,12 +159,12 @@ class _DarkPanelState extends State<DarkPanel> {
     }
   }
 
-// end while pressed gas button
+// ---------> end while pressed gas button <---------
 
 
-// whie pressed Tank Refill button
+// ---------> whie pressed Tank Refill button <---------
 
-  // Tank Pointer going up
+  // ---------> Tank Pointer going up <---------
   void _increaseTankPointerValueWhilePressed() async {
     if (_loopActive) return; // check if loop is active
 
@@ -155,7 +183,7 @@ class _DarkPanelState extends State<DarkPanel> {
     _loopActive = false;
   }
 
-// end while pressed Tank Refill button
+// ---------> end while pressed Tank Refill button <---------
 
 
   double tankPointerValue = 75.0;
@@ -165,11 +193,11 @@ class _DarkPanelState extends State<DarkPanel> {
   static const IconData settings = IconData(0xe57f, fontFamily: 'MaterialIcons');
   
 
-// ----------------> Settings: Change Font Size - Start 
+// ----------------> Settings: Change Font Size <------------- Start 
 
   var _popupMenuItemIndex = 0.0;
 
-// change Font Size rpm - start
+// ---------> change Font Size rpm <--------- start
 
   double custSizeRPM = 15.0;
 
@@ -187,8 +215,6 @@ class _DarkPanelState extends State<DarkPanel> {
 
   double indivitualSize = 20;
 
-  // if (this.iconName = '') indivitualSize = 30;
-
 
   _onMenuItemSelectedRPM(double value) {
     setState(() {
@@ -205,10 +231,10 @@ class _DarkPanelState extends State<DarkPanel> {
       custSizeRPM = custSizeRPM;
     }
   }
-// change Font Size rpm - end
+// ---------> change Font Size rpm <--------- end
 
 
-// change Font Size kmh - start
+// ---------> change Font Size kmh <--------- start
 
   double custSizeKMH = 15.0;
 
@@ -239,10 +265,10 @@ class _DarkPanelState extends State<DarkPanel> {
       custSizeKMH = custSizeKMH;
     }
   }
-// change Font Size kmh - end
+// ---------> change Font Size kmh <--------- end
 
 
-// change Font Size Tank - start
+// ---------> change Font Size Tank <--------- start
 
   double custSizeTank = 15.0;
 
@@ -274,11 +300,12 @@ class _DarkPanelState extends State<DarkPanel> {
     }
   }
 
-// change Font Size Tank - end
+// ---------> change Font Size Tank <--------- end
 
-// ----------------> Settings: Change Font Size - End 
+// ----------------> Settings: Change Font Size <------------ end 
 
-// change Widget Size - start
+
+// ---------> change Widget Size <--------- start
 
   double custWidgetSize = 40;
 
@@ -319,7 +346,7 @@ class _DarkPanelState extends State<DarkPanel> {
     }
   }
 
-// change Widget Size - end
+// ---------> change Widget Size <--------- end
 
   @override
   Widget build(BuildContext context) {

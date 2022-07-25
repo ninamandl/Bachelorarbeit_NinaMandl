@@ -1,16 +1,12 @@
-
 // ignore_for_file: avoid_print, constant_identifier_names, unused_field, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 enum Options { small, medium, big, exit }
-
 
 
 class LightPanel extends StatefulWidget {
@@ -59,6 +55,7 @@ class _LightPanelState extends State<LightPanel> {
   }
 
 //-----------> Server <----------- Ende
+
 
   void _setPointerDuration() {
     setState(() {
@@ -128,10 +125,7 @@ class _LightPanelState extends State<LightPanel> {
   }
 
 
-
-
-
-// whie pressed gas button
+// ---------> whie pressed gas button <---------
 
   // Pointer going up
   void _increasePointerValueWhilePressed() async {
@@ -165,10 +159,10 @@ class _LightPanelState extends State<LightPanel> {
     }
   }
 
-// end while pressed gas button
+// ---------> end while pressed gas button <---------
 
 
-// whie pressed Tank Refill button
+// ---------> whie pressed Tank Refill button <---------
 
   // Tank Pointer going up
   void _increaseTankPointerValueWhilePressed() async {
@@ -189,7 +183,7 @@ class _LightPanelState extends State<LightPanel> {
     _loopActive = false;
   }
 
-// end while pressed Tank Refill button
+// ---------> end while pressed Tank Refill button <---------
 
 
   double tankPointerValue = 75.0;
@@ -199,11 +193,11 @@ class _LightPanelState extends State<LightPanel> {
   static const IconData settings = IconData(0xe57f, fontFamily: 'MaterialIcons');
   
 
-// ----------------> Settings: Change Font Size - Start 
+// ----------------> Settings: Change Font Size <--------- Start 
 
   var _popupMenuItemIndex = 0.0;
 
-// change Font Size rpm - start
+// ---------> change Font Size rpm <--------- start
 
   double custSizeRPM = 15.0;
 
@@ -221,8 +215,6 @@ class _LightPanelState extends State<LightPanel> {
 
   double indivitualSize = 20;
 
-  // if (this.iconName = '') indivitualSize = 30;
-
 
   _onMenuItemSelectedRPM(double value) {
     setState(() {
@@ -239,10 +231,10 @@ class _LightPanelState extends State<LightPanel> {
       custSizeRPM = custSizeRPM;
     }
   }
-// change Font Size rpm - end
+// ---------> change Font Size rpm <--------- end
 
 
-// change Font Size kmh - start
+// ---------> change Font Size kmh <--------- start
 
   double custSizeKMH = 15.0;
 
@@ -273,10 +265,10 @@ class _LightPanelState extends State<LightPanel> {
       custSizeKMH = custSizeKMH;
     }
   }
-// change Font Size kmh - end
+// ---------> change Font Size kmh <--------- end
 
 
-// change Font Size Tank - start
+// ---------> change Font Size Tank <--------- start
 
   double custSizeTank = 15.0;
 
@@ -308,11 +300,12 @@ class _LightPanelState extends State<LightPanel> {
     }
   }
 
-// change Font Size Tank - end
+// ---------> change Font Size Tank <--------- end
 
-// ----------------> Settings: Change Font Size - End 
+// ----------------> Settings: Change Font Size <------------- end 
 
-// change Widget Size - start
+
+// ---------> change Widget Size <--------- start
 
   double custWidgetSize = 40;
 
@@ -353,7 +346,7 @@ class _LightPanelState extends State<LightPanel> {
     }
   }
 
-// change Widget Size - end
+// ---------> change Widget Size <--------- end
 
   @override
   Widget build(BuildContext context) {
