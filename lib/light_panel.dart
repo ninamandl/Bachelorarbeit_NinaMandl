@@ -7,6 +7,8 @@ import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 enum Options { small, medium, big, exit }
 
 
@@ -29,30 +31,55 @@ class _LightPanelState extends State<LightPanel> {
   bool _loopActive = false;
   bool _notButtonPressed = false;
 
+// This function will send the message to our backend.
+void sendMessage(msg) {
+  WebSocketChannel? channel;
+  // We use a try - catch statement, because the connection might fail.
+  try {
+    // Connect to our backend.
+    channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
+  } catch (e) {
+    // If there is any error that might be because you need to use another connection.
+    print("Error on connecting to websocket: " + e.toString());
+  }
+  // Send message to backend
+  channel?.sink.add(msg);
 
-// ----------> writing data to a file <--------- start
-  // Find the correct local path
-  Future<String> get _localPath async {
-  final directory = await getApplicationDocumentsDirectory();
-
-  return directory.path;
+  // Listen for any message from backend
+  channel?.stream.listen((event) {
+    // Just making sure it is not empty
+    if (event!.isNotEmpty) {
+      print(event);
+      // Now only close the connection and we are done here!
+      channel!.sink.close();
+    } 
+  });
 }
 
-  // Create a reference to the file location
-Future<File> get _localFile async {
-  final path = await _localPath;
-  return File('$path/counter.txt');
-}
 
-  // Write data to the file
-Future<File> writeCounter(int counter) async {
-  final file = await _localFile;
+// // ----------> writing data to a file <--------- start
+//   // Find the correct local path
+//   Future<String> get _localPath async {
+//   final directory = await getApplicationDocumentsDirectory();
 
-  // Write the file
-  return file.writeAsString('$counter');
-}
+//   return directory.path;
+// }
 
-// ----------> writing data to a file <--------- end
+//   // Create a reference to the file location
+// Future<File> get _localFile async {
+//   final path = await _localPath;
+//   return File('$path/counter.txt');
+// }
+
+//   // Write data to the file
+// Future<File> writeCounter(int counter) async {
+//   final file = await _localFile;
+
+//   // Write the file
+//   return file.writeAsString('$counter');
+// }
+
+// // ----------> writing data to a file <--------- end
 
   void _setPointerDuration() {
     setState(() {
@@ -65,6 +92,7 @@ Future<File> writeCounter(int counter) async {
       if (tankPointerValue > 100) tankPointerValue = 100;
       if (tachoPointerValue >= 180) tachoPointerValue = 180;
       print('Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue - going up');
+      sendMessage('Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue - going up');
     });
   }
 

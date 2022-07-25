@@ -42,7 +42,18 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< Updated upstream
     version: "1.15.0"
+=======
+    version: "1.16.0"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.2"
+>>>>>>> Stashed changes
   fake_async:
     dependency: transitive
     description:
@@ -260,7 +271,11 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< Updated upstream
     version: "0.4.3"
+=======
+    version: "0.4.9"
+>>>>>>> Stashed changes
   typed_data:
     dependency: transitive
     description:
@@ -274,7 +289,18 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< Updated upstream
     version: "2.1.1"
+=======
+    version: "2.1.2"
+  web_socket_channel:
+    dependency: "direct main"
+    description:
+      name: web_socket_channel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
+>>>>>>> Stashed changes
   win32:
     dependency: transitive
     description:
