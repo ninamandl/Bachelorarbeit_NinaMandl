@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:intl/intl.dart';
 
 enum Options { small, medium, big, exit }
 
@@ -29,13 +30,18 @@ class _DarkPanelState extends State<DarkPanel> {
 
 //-----------> Server <----------- Start
 
+  String tdata = DateFormat("HH:mm:ss").format(DateTime.now());
+
+ // final now = DateTime.now().toString();
+  
+
   // This function will send the message to our backend.
   void sendMessage(msg) {
     WebSocketChannel? channel;
     // We use a try - catch statement, because the connection might fail.
     try {
       // Connect to our backend.
-      channel = WebSocketChannel.connect(Uri.parse('ws://localhost:3000'));
+      channel = WebSocketChannel.connect(Uri.parse('ws://192.168.179.52:3001'));
     } catch (e) {
       // If there is any error that might be because you need to use another connection.
       print("Error on connecting to websocket: " + e.toString());
@@ -55,7 +61,6 @@ class _DarkPanelState extends State<DarkPanel> {
   }
 
 //-----------> Server <----------- Ende
-  
 
   void _setPointerDuration() {
     setState(() {
@@ -67,8 +72,9 @@ class _DarkPanelState extends State<DarkPanel> {
       if (tankPointerValue < 0) tankPointerValue = 0;
       if (tankPointerValue > 100) tankPointerValue = 100;
       if (tachoPointerValue >= 180) tachoPointerValue = 180;
-      print('GOING UP ---> Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue');
-      sendMessage('GOING UP ---> Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue');
+      String now = DateTime.now().toString();
+      print('$now: GOING UP ---> Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue');
+      sendMessage('$now: GOING UP ---> Tacho Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue; Tank Value: $tankPointerValue');
     });
   }
 
@@ -77,8 +83,9 @@ class _DarkPanelState extends State<DarkPanel> {
     tachoPointerValue -= 0.5;
     revolutionsPointerValue = tachoPointerValue / 38;
     if (tachoPointerValue == 0.0) _reset();
-    print('GOING DOWN ---> Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue');
-    sendMessage('GOING DOWN ---> Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue');
+    String now = DateTime.now().toString();
+    print('$now: GOING DOWN ---> Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue');
+    sendMessage('$now: GOING DOWN ---> Value: $tachoPointerValue; Revolutions Value: $revolutionsPointerValue');
   }
 
   void _stop() {
@@ -86,8 +93,9 @@ class _DarkPanelState extends State<DarkPanel> {
       duration = 0;
       _buttonPressed = false;
       _notButtonPressed = false;
-      print('STOP BUTTONn');
-      sendMessage('STOP BUTTON');
+      String now = DateTime.now().toString();
+      print('$now: STOP BUTTONn');
+      sendMessage('$now: STOP BUTTON');
     });
   }
 
@@ -98,8 +106,9 @@ class _DarkPanelState extends State<DarkPanel> {
       duration = 0;
       _buttonPressed = false;
       _notButtonPressed = false;
-      print('RESET BUTTON');
-      sendMessage('RESET BUTTON');
+      String now = DateTime.now().toString();
+      print('$now: RESET BUTTON');
+      sendMessage('$now: RESET BUTTON');
     });
   }
 
@@ -109,8 +118,9 @@ class _DarkPanelState extends State<DarkPanel> {
       tankPointerValue ++;
       if (tankPointerValue < 0) tankPointerValue = 0;
       if (tankPointerValue > 100) tankPointerValue = 100;
-      print('REFILL BUTTON ---> Tank: $tankPointerValue');
-      sendMessage('REFILL BUTTON ---> Tank: $tankPointerValue');
+      String now = DateTime.now().toString();
+      print('$now: REFILL BUTTON ---> Tank: $tankPointerValue');
+      sendMessage('$now: REFILL BUTTON ---> Tank: $tankPointerValue');
     });
   }
 
@@ -119,8 +129,9 @@ class _DarkPanelState extends State<DarkPanel> {
       duration = 0;
       _buttonPressed = false;
       _notButtonPressed = false;
-      print('STOP / STOP REFILL');
-      sendMessage('STOP / STOP REFILL');
+      String now = DateTime.now().toString();
+      print('$now: STOP / STOP REFILL');
+      sendMessage('$now: STOP / STOP REFILL');
     });
   }
 
@@ -219,14 +230,26 @@ class _DarkPanelState extends State<DarkPanel> {
   _onMenuItemSelectedRPM(double value) {
     setState(() {
       _popupMenuItemIndex = value;
+      String now = DateTime.now().toString();
+      print('$now: RPM SETTINGS');
+      sendMessage('$now: RPM SETTINGS');
     });
 
     if (value == Options.small.index) {
       custSizeRPM = 10.0;
+      String now = DateTime.now().toString();
+      print('$now: RPM --> small');
+      sendMessage('$now: RPM --> small');
     } else if (value == Options.medium.index) {
       custSizeRPM = 15.0;
+      String now = DateTime.now().toString();
+      print('$now: RPM --> medium');
+      sendMessage('$now: RPM --> medium');
     } else if (value == Options.big.index) {
       custSizeRPM = 20.0;
+      String now = DateTime.now().toString();
+      print('$now: RPM --> big');
+      sendMessage('$now: RPM --> big');
     } else {
       custSizeRPM = custSizeRPM;
     }
@@ -253,14 +276,26 @@ class _DarkPanelState extends State<DarkPanel> {
   _onMenuItemSelectedKMH(double value) {
     setState(() {
       _popupMenuItemIndex = value;
+      String now = DateTime.now().toString();
+      print('$now: KMH SETTINGS');
+      sendMessage('$now: KMH SETTINGS');
     });
 
     if (value == Options.small.index) {
       custSizeKMH = 10.0;
+      String now = DateTime.now().toString();
+      print('$now: KMH --> small');
+      sendMessage('$now: KMH --> small');
     } else if (value == Options.medium.index) {
       custSizeKMH = 15.0;
+      String now = DateTime.now().toString();
+      print('$now: KMH --> medium');
+      sendMessage('$now: KMH --> medium');
     } else if (value == Options.big.index) {
       custSizeKMH = 20.0;
+      String now = DateTime.now().toString();
+      print('$now: KMH --> big');
+      sendMessage('$now: KMH --> big');
     } else {
       custSizeKMH = custSizeKMH;
     }
@@ -287,14 +322,26 @@ class _DarkPanelState extends State<DarkPanel> {
   _onMenuItemSelectedTank(double value) {
     setState(() {
       _popupMenuItemIndex = value;
+      String now = DateTime.now().toString();
+      print('$now: TANK SETTINGS');
+      sendMessage('$now: TANK SETTINGS');
     });
 
     if (value == Options.small.index) {
       custSizeTank = 10.0;
+      String now = DateTime.now().toString();
+      print('$now: TANK --> small');
+      sendMessage('$now: TANK --> small');
     } else if (value == Options.medium.index) {
       custSizeTank = 15.0;
+      String now = DateTime.now().toString();
+      print('$now: TANK --> medium');
+      sendMessage('$now: TANK --> medium');
     } else if (value == Options.big.index) {
       custSizeTank = 20.0;
+      String now = DateTime.now().toString();
+      print('$now: TANK --> big');
+      sendMessage('$now: TANK --> big');
     } else {
       custSizeTank = custSizeTank;
     }
@@ -324,6 +371,9 @@ class _DarkPanelState extends State<DarkPanel> {
   _onMenuItemSelected(double value) {
     setState(() {
       _popupMenuItemIndex = value;
+      String now = DateTime.now().toString();
+      print('$now: WIDGET SIZE SETTINGS');
+      sendMessage('$now: WIDGET SIZE SETTINGS');
     });
 
     if (value == Options.small.index) {
@@ -331,16 +381,25 @@ class _DarkPanelState extends State<DarkPanel> {
       custSizeRPM = 10.0;
       custSizeKMH = 10.0;
       custSizeTank = 10.0;
+      String now = DateTime.now().toString();
+      print('$now: WIDGET SIZE --> small');
+      sendMessage('$now: WIDGET SIZE --> small');
     } else if (value == Options.medium.index) {
       custWidgetSize = 40.0;
       custSizeRPM = 15.0;
       custSizeKMH = 15.0;
       custSizeTank = 15.0;
+      String now = DateTime.now().toString();
+      print('$now: WIDGET SIZE --> medium');
+      sendMessage('$now: WIDGET SIZE --> medium');
     } else if (value == Options.big.index) {
       custWidgetSize = 50.0;
       custSizeRPM = 20.0;
       custSizeKMH = 20.0;
       custSizeTank = 20.0;
+      String now = DateTime.now().toString();
+      print('$now: WIDGET SIZE --> big');
+      sendMessage('$now: WIDGET SIZE --> big');
     } else {
       custWidgetSize = custWidgetSize;
     }
